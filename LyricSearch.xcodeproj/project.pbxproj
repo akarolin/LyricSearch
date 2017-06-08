@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		0B436CE21EE9928B0097971D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B436CE11EE9928B0097971D /* main.m */; };
 		0B436CE51EE9928C0097971D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B436CE41EE9928C0097971D /* AppDelegate.m */; };
-		0B436CE81EE9928C0097971D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B436CE71EE9928C0097971D /* ViewController.m */; };
 		0B436CEB1EE9928C0097971D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B436CE91EE9928C0097971D /* Main.storyboard */; };
 		0B436CED1EE9928C0097971D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B436CEC1EE9928C0097971D /* Assets.xcassets */; };
 		0B436CF01EE9928C0097971D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B436CEE1EE9928C0097971D /* LaunchScreen.storyboard */; };
 		0B436CFB1EE9928C0097971D /* LyricSearchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B436CFA1EE9928C0097971D /* LyricSearchTests.m */; };
 		0B436D061EE9928C0097971D /* LyricSearchUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B436D051EE9928C0097971D /* LyricSearchUITests.m */; };
+		0B436D151EE995B00097971D /* SearchTunesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B436D141EE995B00097971D /* SearchTunesTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,8 +39,6 @@
 		0B436CE11EE9928B0097971D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0B436CE31EE9928C0097971D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0B436CE41EE9928C0097971D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		0B436CE61EE9928C0097971D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		0B436CE71EE9928C0097971D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		0B436CEA1EE9928C0097971D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0B436CEC1EE9928C0097971D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0B436CEF1EE9928C0097971D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +49,8 @@
 		0B436D011EE9928C0097971D /* LyricSearchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LyricSearchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B436D051EE9928C0097971D /* LyricSearchUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LyricSearchUITests.m; sourceTree = "<group>"; };
 		0B436D071EE9928C0097971D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0B436D131EE995B00097971D /* SearchTunesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTunesTableViewController.h; sourceTree = "<group>"; };
+		0B436D141EE995B00097971D /* SearchTunesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTunesTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,14 +101,9 @@
 		0B436CDF1EE9928B0097971D /* LyricSearch */ = {
 			isa = PBXGroup;
 			children = (
-				0B436CE31EE9928C0097971D /* AppDelegate.h */,
-				0B436CE41EE9928C0097971D /* AppDelegate.m */,
-				0B436CE61EE9928C0097971D /* ViewController.h */,
-				0B436CE71EE9928C0097971D /* ViewController.m */,
+				0B436D131EE995B00097971D /* SearchTunesTableViewController.h */,
+				0B436D141EE995B00097971D /* SearchTunesTableViewController.m */,
 				0B436CE91EE9928C0097971D /* Main.storyboard */,
-				0B436CEC1EE9928C0097971D /* Assets.xcassets */,
-				0B436CEE1EE9928C0097971D /* LaunchScreen.storyboard */,
-				0B436CF11EE9928C0097971D /* Info.plist */,
 				0B436CE01EE9928B0097971D /* Supporting Files */,
 			);
 			path = LyricSearch;
@@ -117,6 +112,11 @@
 		0B436CE01EE9928B0097971D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0B436CE31EE9928C0097971D /* AppDelegate.h */,
+				0B436CE41EE9928C0097971D /* AppDelegate.m */,
+				0B436CEE1EE9928C0097971D /* LaunchScreen.storyboard */,
+				0B436CEC1EE9928C0097971D /* Assets.xcassets */,
+				0B436CF11EE9928C0097971D /* Info.plist */,
 				0B436CE11EE9928B0097971D /* main.m */,
 			);
 			name = "Supporting Files";
@@ -276,8 +276,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B436CE81EE9928C0097971D /* ViewController.m in Sources */,
 				0B436CE51EE9928C0097971D /* AppDelegate.m in Sources */,
+				0B436D151EE995B00097971D /* SearchTunesTableViewController.m in Sources */,
 				0B436CE21EE9928B0097971D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

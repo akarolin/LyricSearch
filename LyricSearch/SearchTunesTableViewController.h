@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  SearchTunesTableViewController.h
 //  LyricSearch
 //
 //  Created by Andy Karolin on 6/8/17.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface SearchTunesTableViewController : UITableViewController
 
 @end
-
