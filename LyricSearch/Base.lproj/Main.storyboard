@@ -17,29 +17,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Enter search words" id="P3S-io-7mW">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchCell" id="Z5J-VD-JMX">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Z5J-VD-JMX" id="6Tb-9c-Hvf">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <searchBar contentMode="redraw" placeholder="Enter search words" translatesAutoresizingMaskIntoConstraints="NO" id="P3S-io-7mW">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                        </searchBar>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="P3S-io-7mW" secondAttribute="trailing" id="I44-Ed-LZ4"/>
-                                        <constraint firstItem="P3S-io-7mW" firstAttribute="leading" secondItem="6Tb-9c-Hvf" secondAttribute="leading" id="PnK-De-zFb"/>
-                                        <constraint firstAttribute="bottom" secondItem="P3S-io-7mW" secondAttribute="bottom" id="rEo-pG-7bj"/>
-                                        <constraint firstItem="P3S-io-7mW" firstAttribute="top" secondItem="6Tb-9c-Hvf" secondAttribute="top" id="t8p-4M-niZ"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="QiT-d0-9tD">
-                                <rect key="frame" x="0.0" y="72" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ResultsCell" id="QiT-d0-9tD">
+                                <rect key="frame" x="0.0" y="71" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QiT-d0-9tD" id="pRx-O7-B5W">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
