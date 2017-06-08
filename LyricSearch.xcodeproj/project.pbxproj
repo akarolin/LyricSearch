@@ -15,6 +15,8 @@
 		0B436CFB1EE9928C0097971D /* LyricSearchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B436CFA1EE9928C0097971D /* LyricSearchTests.m */; };
 		0B436D061EE9928C0097971D /* LyricSearchUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B436D051EE9928C0097971D /* LyricSearchUITests.m */; };
 		0B436D151EE995B00097971D /* SearchTunesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B436D141EE995B00097971D /* SearchTunesTableViewController.m */; };
+		0B436D181EE9A8B90097971D /* WebService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B436D171EE9A8B90097971D /* WebService.m */; };
+		0B436D1A1EE9ACAB0097971D /* WebServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B436D191EE9ACAB0097971D /* WebServiceTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,9 @@
 		0B436D071EE9928C0097971D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B436D131EE995B00097971D /* SearchTunesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTunesTableViewController.h; sourceTree = "<group>"; };
 		0B436D141EE995B00097971D /* SearchTunesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTunesTableViewController.m; sourceTree = "<group>"; };
+		0B436D161EE9A8B90097971D /* WebService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebService.h; sourceTree = "<group>"; };
+		0B436D171EE9A8B90097971D /* WebService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebService.m; sourceTree = "<group>"; };
+		0B436D191EE9ACAB0097971D /* WebServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebServiceTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +109,8 @@
 				0B436D131EE995B00097971D /* SearchTunesTableViewController.h */,
 				0B436D141EE995B00097971D /* SearchTunesTableViewController.m */,
 				0B436CE91EE9928C0097971D /* Main.storyboard */,
+				0B436D161EE9A8B90097971D /* WebService.h */,
+				0B436D171EE9A8B90097971D /* WebService.m */,
 				0B436CE01EE9928B0097971D /* Supporting Files */,
 			);
 			path = LyricSearch;
@@ -127,6 +134,7 @@
 			children = (
 				0B436CFA1EE9928C0097971D /* LyricSearchTests.m */,
 				0B436CFC1EE9928C0097971D /* Info.plist */,
+				0B436D191EE9ACAB0097971D /* WebServiceTests.m */,
 			);
 			path = LyricSearchTests;
 			sourceTree = "<group>";
@@ -278,6 +286,7 @@
 			files = (
 				0B436CE51EE9928C0097971D /* AppDelegate.m in Sources */,
 				0B436D151EE995B00097971D /* SearchTunesTableViewController.m in Sources */,
+				0B436D181EE9A8B90097971D /* WebService.m in Sources */,
 				0B436CE21EE9928B0097971D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -286,6 +295,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B436D1A1EE9ACAB0097971D /* WebServiceTests.m in Sources */,
 				0B436CFB1EE9928C0097971D /* LyricSearchTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
