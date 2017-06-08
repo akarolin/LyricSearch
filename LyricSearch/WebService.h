@@ -11,6 +11,7 @@
 @interface WebService : NSObject
 
 @property (nonatomic, strong) NSDictionary *jsonObject;
+@property (nonatomic, strong) NSString *errorMsg;
 
 - (void) getWebData:(NSString *)urlString;
 

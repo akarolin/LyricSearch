@@ -35,6 +35,18 @@
     XCTAssertTrue(self.webService.jsonObject != nil);
 }
 
+- (void)testFailedJSON {
+    [self.webService getWebData:@"http://lyrics.wikia.com/api.php?func=getSong&artist=Tom+Waits&song=new+coat+of+paint&fmt=json"];
+    XCTAssertTrue(self.webService.jsonObject == nil);
+    
+    [NSThread sleepForTimeInterval:3];
+    NSLog(@"Done Sleeping");
+    
+    XCTAssertTrue(self.webService.jsonObject == nil);
+    XCTAssertTrue(self.webService.errorMsg != nil);
+}
+
+
 //- (void)testPerformanceExample {
 //    // This is an example of a performance test case.
 //    [self measureBlock:^{

@@ -133,8 +133,8 @@
 			isa = PBXGroup;
 			children = (
 				0B436CFA1EE9928C0097971D /* LyricSearchTests.m */,
-				0B436CFC1EE9928C0097971D /* Info.plist */,
 				0B436D191EE9ACAB0097971D /* WebServiceTests.m */,
+				0B436CFC1EE9928C0097971D /* Info.plist */,
 			);
 			path = LyricSearchTests;
 			sourceTree = "<group>";
