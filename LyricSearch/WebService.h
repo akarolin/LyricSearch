@@ -16,3 +16,9 @@
 - (void) getWebData:(NSString *)urlString;
 
 @end
+
+NSString * const ResponseError = @"Error";
+NSString * const HTTPError = @"HTTP Error";
+NSString * const JSONError = @"JSON Error";
+NSString * const DataError = @"DATA Error";
+

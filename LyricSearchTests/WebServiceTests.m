@@ -39,14 +39,24 @@
     [self.webService getWebData:@"http://lyrics.wikia.com/api.php?func=getSong&artist=Tom+Waits&song=new+coat+of+paint&fmt=json"];
     XCTAssertTrue(self.webService.jsonObject == nil);
     
-    [NSThread sleepForTimeInterval:3];
+    [NSThread sleepForTimeInterval:2];
+    NSLog(@"Done Sleeping");
+    XCTAssertTrue(self.webService.jsonObject == nil);
+    XCTAssertTrue([self.webService.errorMsg hasPrefix:JSONError]);
+}
+
+- (void)testBadURL {
+    [self.webService getWebData:@"https://itunes.apple.com/search?term=tom+waits&entity=xyz"];
+    XCTAssertTrue(self.webService.jsonObject == nil);
+    
+    [NSThread sleepForTimeInterval:2];
     NSLog(@"Done Sleeping");
     
     XCTAssertTrue(self.webService.jsonObject == nil);
-    XCTAssertTrue(self.webService.errorMsg != nil);
+    XCTAssertTrue([self.webService.errorMsg hasPrefix:HTTPError]);
 }
 
-
+//10.0.0.0
 //- (void)testPerformanceExample {
 //    // This is an example of a performance test case.
 //    [self measureBlock:^{
