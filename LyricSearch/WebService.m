@@ -7,6 +7,7 @@
 //
 
 #import "WebService.h"
+#import <JavaScriptCore/JavaScriptCore.h>
 
 @implementation WebService
 
@@ -34,7 +35,7 @@
             } else { // Valid reponse attempt to get object
                 
                 NSError *jsonError = nil;
-                NSDictionary *dataObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                NSDictionary *dataObject = [self getResponseObjectFromData:data withError:&jsonError];
                 if (dataObject == nil) {
                     NSMutableString *errorMessage = [[NSMutableString alloc] initWithFormat:@"%@: ",JSONError];
                     [errorMessage appendString:jsonError.localizedDescription];
@@ -51,6 +52,21 @@
     
     [dataTask resume];
 }
+
+- (NSDictionary *)getResponseObjectFromData:(NSData *)data withError:(NSError **)error {
+    
+    NSDictionary *dataObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:error];
+
+    if (dataObject == nil) { // not a json object, try a javascript object
+        NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        JSContext *context = [[JSContext alloc] init];
+        JSValue *object = [context evaluateScript: dataString ? dataString : @""];
+        dataObject = [object toDictionary];
+    }
+    
+    return dataObject;
+}
+
 
 -(void)webServiceResponse:(NSDictionary *)dataObject withError:(NSString *)errorMessage {
     if ([self.delegate respondsToSelector:@selector(webServiceResponse: withError:)]) {

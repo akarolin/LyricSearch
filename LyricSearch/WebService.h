@@ -21,6 +21,7 @@
 @property (nonatomic, strong) NSString *errorMsg;
 
 - (void) getWebData:(NSString *)urlString;
+- (NSDictionary *)getResponseObjectFromData:(NSData *)data withError:(NSError **)error;
 
 @end
 
