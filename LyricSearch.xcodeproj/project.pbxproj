@@ -17,6 +17,10 @@
 		0B436D151EE995B00097971D /* SearchTunesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B436D141EE995B00097971D /* SearchTunesTableViewController.m */; };
 		0B436D181EE9A8B90097971D /* WebService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B436D171EE9A8B90097971D /* WebService.m */; };
 		0B436D1A1EE9ACAB0097971D /* WebServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B436D191EE9ACAB0097971D /* WebServiceTests.m */; };
+		0B436D1D1EEB1F290097971D /* TuneSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B436D1C1EEB1F290097971D /* TuneSearch.m */; };
+		0B6372991EEB5A2400B256CF /* StringConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B6372981EEB5A2400B256CF /* StringConstants.m */; };
+		0B806BF31EEB27AA0060792A /* NSString+CondenseSpaces.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B806BF21EEB27AA0060792A /* NSString+CondenseSpaces.m */; };
+		0B806BFC1EEB2F130060792A /* SongData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B806BFB1EEB2F130060792A /* SongData.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +60,14 @@
 		0B436D161EE9A8B90097971D /* WebService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebService.h; sourceTree = "<group>"; };
 		0B436D171EE9A8B90097971D /* WebService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebService.m; sourceTree = "<group>"; };
 		0B436D191EE9ACAB0097971D /* WebServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebServiceTests.m; sourceTree = "<group>"; };
+		0B436D1B1EEB1F290097971D /* TuneSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuneSearch.h; sourceTree = "<group>"; };
+		0B436D1C1EEB1F290097971D /* TuneSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuneSearch.m; sourceTree = "<group>"; };
+		0B6372981EEB5A2400B256CF /* StringConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringConstants.m; sourceTree = "<group>"; };
+		0B63729A1EEB5A7900B256CF /* StringConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringConstants.h; sourceTree = "<group>"; };
+		0B806BF11EEB27AA0060792A /* NSString+CondenseSpaces.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CondenseSpaces.h"; sourceTree = "<group>"; };
+		0B806BF21EEB27AA0060792A /* NSString+CondenseSpaces.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CondenseSpaces.m"; sourceTree = "<group>"; };
+		0B806BFA1EEB2F130060792A /* SongData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongData.h; sourceTree = "<group>"; };
+		0B806BFB1EEB2F130060792A /* SongData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongData.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +123,10 @@
 				0B436CE91EE9928C0097971D /* Main.storyboard */,
 				0B436D161EE9A8B90097971D /* WebService.h */,
 				0B436D171EE9A8B90097971D /* WebService.m */,
+				0B806BFA1EEB2F130060792A /* SongData.h */,
+				0B806BFB1EEB2F130060792A /* SongData.m */,
+				0B436D1B1EEB1F290097971D /* TuneSearch.h */,
+				0B436D1C1EEB1F290097971D /* TuneSearch.m */,
 				0B436CE01EE9928B0097971D /* Supporting Files */,
 			);
 			path = LyricSearch;
@@ -119,6 +135,10 @@
 		0B436CE01EE9928B0097971D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0B63729A1EEB5A7900B256CF /* StringConstants.h */,
+				0B6372981EEB5A2400B256CF /* StringConstants.m */,
+				0B806BF11EEB27AA0060792A /* NSString+CondenseSpaces.h */,
+				0B806BF21EEB27AA0060792A /* NSString+CondenseSpaces.m */,
 				0B436CE31EE9928C0097971D /* AppDelegate.h */,
 				0B436CE41EE9928C0097971D /* AppDelegate.m */,
 				0B436CEE1EE9928C0097971D /* LaunchScreen.storyboard */,
@@ -284,6 +304,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B6372991EEB5A2400B256CF /* StringConstants.m in Sources */,
+				0B806BFC1EEB2F130060792A /* SongData.m in Sources */,
+				0B436D1D1EEB1F290097971D /* TuneSearch.m in Sources */,
+				0B806BF31EEB27AA0060792A /* NSString+CondenseSpaces.m in Sources */,
 				0B436CE51EE9928C0097971D /* AppDelegate.m in Sources */,
 				0B436D151EE995B00097971D /* SearchTunesTableViewController.m in Sources */,
 				0B436D181EE9A8B90097971D /* WebService.m in Sources */,
@@ -528,6 +552,7 @@
 				0B436D0C1EE9928C0097971D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0B436D0D1EE9928C0097971D /* Build configuration list for PBXNativeTarget "LyricSearchTests" */ = {
 			isa = XCConfigurationList;
@@ -536,6 +561,7 @@
 				0B436D0F1EE9928C0097971D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0B436D101EE9928C0097971D /* Build configuration list for PBXNativeTarget "LyricSearchUITests" */ = {
 			isa = XCConfigurationList;
@@ -544,6 +570,7 @@
 				0B436D121EE9928C0097971D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

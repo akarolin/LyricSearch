@@ -20,14 +20,9 @@
 @property (nonatomic, strong) id <WebServiceDelegate> delegate;
 @property (nonatomic, strong) NSString *errorMsg;
 
-- (void) getWebData:(NSString *)urlString;
+- (void) getWebDataByURL:(NSString *)urlString;
 - (NSDictionary *)getResponseObjectFromData:(NSData *)data withError:(NSError **)error;
 - (NSString *)createCompleteURLString:(NSString *)url withParameters:(NSDictionary *)parameters andHTTPS:(BOOL)useHTTPS;
 
 @end
-
-NSString * const ResponseError = @"Error";
-NSString * const HTTPError = @"HTTP Error";
-NSString * const JSONError = @"JSON Error";
-NSString * const DataError = @"DATA Error";
 

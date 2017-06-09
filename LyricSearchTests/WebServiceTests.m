@@ -8,6 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "WebService.h"
+#import "StringConstants.h"
 
 @interface WebServiceTests : XCTestCase<WebServiceDelegate>
 @property (nonatomic, strong) WebService *webService;
@@ -87,7 +88,7 @@
 }
 
 - (void)testSuccessfulJSONCall {
-    [self.webService getWebData:@"https://itunes.apple.com/search?term=tom+waits"];
+    [self.webService getWebDataByURL:@"https://itunes.apple.com/search?term=tom+waits"];
     
     self.serverRespondExpectation = [self expectationWithDescription:@"server responded"];
     [self waitForExpectationsWithTimeout:2 handler:^(NSError *error) {
@@ -101,7 +102,7 @@
 - (void)testSuccessfulJSObjectCall {
     
     // this returns a javascript ojbect
-    [self.webService getWebData:@"http://lyrics.wikia.com/api.php?func=getSong&artist=Tom+Waits&song=new+coat+of+paint&fmt=json"];
+    [self.webService getWebDataByURL:@"http://lyrics.wikia.com/api.php?func=getSong&artist=Tom+Waits&song=new+coat+of+paint&fmt=json"];
     
     self.serverRespondExpectation = [self expectationWithDescription:@"server responded"];
     [self waitForExpectationsWithTimeout:2 handler:^(NSError *error) {
@@ -113,7 +114,7 @@
 }
 
 - (void)testFailedJSON {
-    [self.webService getWebData:@"https://www.google.com"];
+    [self.webService getWebDataByURL:@"https://www.google.com"];
     
     self.serverRespondExpectation = [self expectationWithDescription:@"server responded"];
     [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
@@ -124,7 +125,7 @@
 }
 
 - (void)testBadURL {
-    [self.webService getWebData:@"https://itunes.apple.com/search?term=tom+waits&entity=xyz"];
+    [self.webService getWebDataByURL:@"https://itunes.apple.com/search?term=tom+waits&entity=xyz"];
     
     self.serverRespondExpectation = [self expectationWithDescription:@"server responded"];
     [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {

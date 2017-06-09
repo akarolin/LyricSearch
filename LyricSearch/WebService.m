@@ -7,6 +7,7 @@
 //
 
 #import "WebService.h"
+#import "StringConstants.h"
 #import <JavaScriptCore/JavaScriptCore.h>
 
 @implementation WebService
@@ -31,7 +32,7 @@
     return newURL;
 }
 
-- (void) getWebData:(NSString *)urlString {
+- (void) getWebDataByURL:(NSString *)urlString {
 
     NSURLSession *session = [NSURLSession sharedSession];
     NSURL *url = [NSURL URLWithString:urlString];

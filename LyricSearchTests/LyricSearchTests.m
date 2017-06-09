@@ -7,6 +7,9 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "NSString+CondenseSpaces.h"
+#import "TuneSearch.h"
+#import "StringConstants.h"
 
 @interface LyricSearchTests : XCTestCase
 
@@ -24,16 +27,48 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+- (void)testCondenseSpaces {
+    NSString *testString = @"   This     is      a        test    ";
+    NSString *finalString = @"This is a test";
+    
+    NSString *newString = [testString condenseSpaces];
+    XCTAssertTrue([newString isEqualToString:finalString]);
+    
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
+- (void)testSuccessfulTuneSearch {
+
+    TuneSearch *tuneSearch = [[TuneSearch alloc] init];
+    [tuneSearch getSongsUsingSearchTerms:@"tom waits"];
+    
+    NSPredicate *exists = [NSPredicate predicateWithFormat:@"testExpectation != nil"];
+    [self expectationForPredicate:exists evaluatedWithObject:tuneSearch handler:nil];
+    [self waitForExpectationsWithTimeout:2 handler:^(NSError *error) {
+        XCTAssertNil(error,@"Server Timeout Error: %@", error.localizedDescription);
+        XCTAssertTrue([tuneSearch.testExpectation isEqualToString:DataFound]);
     }];
+    
 }
+
+- (void)testUnsuccessfulTuneSearch {
+    
+    TuneSearch *tuneSearch = [[TuneSearch alloc] init];
+    [tuneSearch getSongsUsingSearchTerms:@"sgyhrk"];
+    
+    NSPredicate *exists = [NSPredicate predicateWithFormat:@"testExpectation != nil"];
+    [self expectationForPredicate:exists evaluatedWithObject:tuneSearch handler:nil];
+    [self waitForExpectationsWithTimeout:2 handler:^(NSError *error) {
+        XCTAssertNil(error,@"Server Timeout Error: %@", error.localizedDescription);
+        XCTAssertTrue([tuneSearch.testExpectation isEqualToString:NoDataFound]);
+    }];
+    
+}
+
+//- (void)testPerformanceExample {
+//    // This is an example of a performance test case.
+//    [self measureBlock:^{
+//        // Put the code you want to measure the time of here.
+//    }];
+//}
 
 @end
