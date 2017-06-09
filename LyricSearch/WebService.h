@@ -22,6 +22,7 @@
 
 - (void) getWebData:(NSString *)urlString;
 - (NSDictionary *)getResponseObjectFromData:(NSData *)data withError:(NSError **)error;
+- (NSString *)createCompleteURLString:(NSString *)url withParameters:(NSDictionary *)parameters andHTTPS:(BOOL)useHTTPS;
 
 @end
 

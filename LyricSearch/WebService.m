@@ -11,6 +11,26 @@
 
 @implementation WebService
 
+- (NSString *)createCompleteURLString:(NSString *)url withParameters:(NSDictionary *)parameters andHTTPS:(BOOL)useHTTPS {
+    NSAssert(![[url lowercaseString] hasPrefix:@"http"],@"parameter: 'url' should not start with http prefix");
+    NSMutableString *newURL = [[NSMutableString alloc] initWithString: useHTTPS ? @"https://" : @"http://"];
+    [newURL appendString:url];
+    
+    if (parameters != nil && [parameters count] > 0) {
+        NSMutableString *parameterString = [[NSMutableString alloc] initWithString:@""];
+        NSString *key;
+        for(key in parameters) {
+            [parameterString appendFormat:@"%s%@=%@", (parameterString.length == 0) ? "?" : "&",key,[parameters objectForKey: key]];
+        }
+
+        NSCharacterSet *expectedCharSet = NSCharacterSet.URLQueryAllowedCharacterSet;
+        NSString *encodedParams = [parameterString stringByAddingPercentEncodingWithAllowedCharacters:expectedCharSet];
+        [newURL appendString:encodedParams];
+    }
+    
+    return newURL;
+}
+
 - (void) getWebData:(NSString *)urlString {
 
     NSURLSession *session = [NSURLSession sharedSession];

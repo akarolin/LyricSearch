@@ -36,6 +36,23 @@
     [self.serverRespondExpectation fulfill];
 }
 
+- (void)testCreateURL {
+    NSString *baseURL = @"lyrics.wikia.com";
+    NSString *test = @"https://lyrics.wikia.com";
+    NSString *url = [self.webService createCompleteURLString:baseURL withParameters:nil andHTTPS:YES];
+    
+    XCTAssertTrue([url isEqualToString:test], "@First CreateURL test fail");
+
+    baseURL = @"lyrics.wikia.com/api.php";
+    test = @"http://lyrics.wikia.com/api.php?func=getSong&artist=Tom%20Waits";
+    NSString *test2 = @"http://lyrics.wikia.com/api.php?artist=Tom%20Waits&func=getSong";
+    NSDictionary *parameters = @{@"func" : @"getSong", @"artist" : @"Tom Waits"};
+    url = [self.webService createCompleteURLString:baseURL withParameters:parameters andHTTPS:NO];
+    
+    // no order guarantee with dictionary, need to check both permutations
+    XCTAssertTrue([url isEqualToString:test] || [url isEqualToString:test2], "@Second CreateURL test fail");
+}
+
 - (void)testSuccessfulJSON {
     NSString *jsonString = @"{ \"content\": {\"1\":\"a\",\"2\":\"b\" } }";
     NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
