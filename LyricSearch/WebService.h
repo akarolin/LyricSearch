@@ -8,9 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol WebServiceDelegate <NSObject>
+
+@required
+-(void)webServiceResponse:(NSDictionary *)dataObject withError:(NSString *)errorMessage;
+
+@end
+
 @interface WebService : NSObject
 
-@property (nonatomic, strong) NSDictionary *jsonObject;
+@property (nonatomic, strong) id <WebServiceDelegate> delegate;
 @property (nonatomic, strong) NSString *errorMsg;
 
 - (void) getWebData:(NSString *)urlString;

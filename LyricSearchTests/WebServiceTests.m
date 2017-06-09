@@ -9,8 +9,12 @@
 #import <XCTest/XCTest.h>
 #import "WebService.h"
 
-@interface WebServiceTests : XCTestCase
+@interface WebServiceTests : XCTestCase<WebServiceDelegate>
 @property (nonatomic, strong) WebService *webService;
+@property (nonatomic, strong) XCTestExpectation *serverRespondExpectation;
+@property (nonatomic, strong) NSDictionary *objectFromWebServiceDelegate;
+@property (nonatomic, strong) NSString *errorMessageFromWebServiceDelegate;
+
 @end
 
 @implementation WebServiceTests
@@ -18,6 +22,7 @@
 - (void)setUp {
     [super setUp];
     self.webService = [[WebService alloc] init];
+    self.webService.delegate = self;
 }
 
 - (void)tearDown {
@@ -25,35 +30,45 @@
     [super tearDown];
 }
 
+- (void)webServiceResponse:(NSDictionary *)dataObject withError:(NSString *)errorMessage {
+    self.objectFromWebServiceDelegate = dataObject;
+    self.errorMessageFromWebServiceDelegate = errorMessage;
+    [self.serverRespondExpectation fulfill];
+}
+
 - (void)testURLcall {
     [self.webService getWebData:@"https://itunes.apple.com/search?term=tom+waits"];
-    XCTAssertTrue(self.webService.jsonObject == nil);
 
-    [NSThread sleepForTimeInterval:2];
-    NSLog(@"Done Sleeping");
+    self.serverRespondExpectation = [self expectationWithDescription:@"server responded"];
+    [self waitForExpectationsWithTimeout:2 handler:^(NSError *error) {
+        XCTAssertEqual(error,nil,@"Server Timeout Error: %@", error.localizedDescription);
+        XCTAssertNotEqual(self.objectFromWebServiceDelegate,nil,@"Data object expected");
+        XCTAssertEqual(self.errorMessageFromWebServiceDelegate,nil, @"No error expected: %@", self.errorMessageFromWebServiceDelegate);
+    }];
 
-    XCTAssertTrue(self.webService.jsonObject != nil);
 }
 
 - (void)testFailedJSON {
-    [self.webService getWebData:@"http://lyrics.wikia.com/api.php?func=getSong&artist=Tom+Waits&song=new+coat+of+paint&fmt=json"];
-    XCTAssertTrue(self.webService.jsonObject == nil);
+    [self.webService getWebData:@"https://www.google.com"];
     
-    [NSThread sleepForTimeInterval:2];
-    NSLog(@"Done Sleeping");
-    XCTAssertTrue(self.webService.jsonObject == nil);
-    XCTAssertTrue([self.webService.errorMsg hasPrefix:JSONError]);
+    self.serverRespondExpectation = [self expectationWithDescription:@"server responded"];
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+        XCTAssertEqual(error,nil,@"Server Timeout Error: %@", error.localizedDescription);
+        XCTAssertEqual(self.objectFromWebServiceDelegate,nil,@"Data object expected");
+        XCTAssertTrue([self.errorMessageFromWebServiceDelegate hasPrefix:JSONError]);
+    }];
 }
 
 - (void)testBadURL {
     [self.webService getWebData:@"https://itunes.apple.com/search?term=tom+waits&entity=xyz"];
-    XCTAssertTrue(self.webService.jsonObject == nil);
     
-    [NSThread sleepForTimeInterval:2];
-    NSLog(@"Done Sleeping");
+    self.serverRespondExpectation = [self expectationWithDescription:@"server responded"];
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+        XCTAssertEqual(error,nil,@"Server Timeout Error: %@", error.localizedDescription);
+        XCTAssertEqual(self.objectFromWebServiceDelegate,nil,@"Data object expected");
+        XCTAssertTrue([self.errorMessageFromWebServiceDelegate hasPrefix:HTTPError]);
+    }];
     
-    XCTAssertTrue(self.webService.jsonObject == nil);
-    XCTAssertTrue([self.webService.errorMsg hasPrefix:HTTPError]);
 }
 
 //10.0.0.0
