@@ -32,9 +32,23 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // Use recording to get started writing UI tests.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-}
+- (void)testTuneSearch {
+    
+    NSString *testArtist = @"Tom Waits";
+    XCUIApplication *app = [[XCUIApplication alloc] init];
+    XCUIElement *enterSearchWordsSearchField = app.tables[@"Empty list"].searchFields[@"Enter search words"];
+    [enterSearchWordsSearchField tap];
+    [enterSearchWordsSearchField typeText:testArtist];
+    [app.buttons[@"Search"] tap];
 
+    NSPredicate *exists = [NSPredicate predicateWithFormat:@"exists == YES"];
+    int timeOutWait = 5;
+
+    XCUIElement *cell = [[app.tables childrenMatchingType:XCUIElementTypeCell] elementBoundByIndex:0];
+    XCUIElement *test = cell.staticTexts[testArtist];
+    [self expectationForPredicate:exists evaluatedWithObject:test handler:nil];
+    [self waitForExpectationsWithTimeout:timeOutWait handler:nil];
+    XCTAssertTrue([test.label isEqualToString:testArtist]);
+
+}
 @end

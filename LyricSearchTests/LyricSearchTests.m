@@ -8,7 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "NSString+CondenseSpaces.h"
-#import "TuneSearch.h"
+#import "TuneSearchData.h"
 #import "StringConstants.h"
 
 @interface LyricSearchTests : XCTestCase
@@ -38,28 +38,28 @@
 
 - (void)testSuccessfulTuneSearch {
 
-    TuneSearch *tuneSearch = [[TuneSearch alloc] init];
-    [tuneSearch getSongsUsingSearchTerms:@"tom waits"];
+    TuneSearchData *tuneSearchData = [[TuneSearchData alloc] init];
+    [tuneSearchData getSongsUsingSearchTerms:@"tom waits"];
     
     NSPredicate *exists = [NSPredicate predicateWithFormat:@"testExpectation != nil"];
-    [self expectationForPredicate:exists evaluatedWithObject:tuneSearch handler:nil];
+    [self expectationForPredicate:exists evaluatedWithObject:tuneSearchData handler:nil];
     [self waitForExpectationsWithTimeout:2 handler:^(NSError *error) {
         XCTAssertNil(error,@"Server Timeout Error: %@", error.localizedDescription);
-        XCTAssertTrue([tuneSearch.testExpectation isEqualToString:DataFound]);
+        XCTAssertTrue([tuneSearchData.testExpectation isEqualToString:DataFound]);
     }];
     
 }
 
 - (void)testUnsuccessfulTuneSearch {
     
-    TuneSearch *tuneSearch = [[TuneSearch alloc] init];
-    [tuneSearch getSongsUsingSearchTerms:@"sgyhrk"];
+    TuneSearchData *tuneSearchData = [[TuneSearchData alloc] init];
+    [tuneSearchData getSongsUsingSearchTerms:@"sgyhrk"];
     
     NSPredicate *exists = [NSPredicate predicateWithFormat:@"testExpectation != nil"];
-    [self expectationForPredicate:exists evaluatedWithObject:tuneSearch handler:nil];
+    [self expectationForPredicate:exists evaluatedWithObject:tuneSearchData handler:nil];
     [self waitForExpectationsWithTimeout:2 handler:^(NSError *error) {
         XCTAssertNil(error,@"Server Timeout Error: %@", error.localizedDescription);
-        XCTAssertTrue([tuneSearch.testExpectation isEqualToString:NoDataFound]);
+        XCTAssertTrue([tuneSearchData.testExpectation isEqualToString:NoDataFound]);
     }];
     
 }

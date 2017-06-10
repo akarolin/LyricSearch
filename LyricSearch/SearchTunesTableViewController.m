@@ -7,8 +7,16 @@
 //
 
 #import "SearchTunesTableViewController.h"
+#import "SongTableViewCell.h"
+#import "SongData.h"
+#import "TuneSearchData.h"
 
-@interface SearchTunesTableViewController ()
+@interface SearchTunesTableViewController () <UISearchBarDelegate, TuneSearchDelegate>
+
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, strong) TuneSearchData *tuneSearchdata;
+@property (nonatomic, strong) NSString *cellIdentifier;
+@property (nonatomic, assign) NSInteger rowHeight;
 
 @end
 
@@ -17,6 +25,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.tuneSearchdata = [[TuneSearchData alloc] init];
+    self.searchBar.delegate = self;
+    self.tuneSearchdata.delegate = self;
+    self.cellIdentifier = @"ResultsCell";
+    
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:self.cellIdentifier];
+    self.rowHeight = cell.bounds.size.height;
+
+   
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -36,15 +53,34 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return [self.tuneSearchdata.songList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell =[tableView dequeueReusableCellWithIdentifier:@"ResultsCell" forIndexPath:indexPath];
+    //static NSString *cellIdentifier = @"ResultsCell";
+
+    SongTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.cellIdentifier];
     
-    // Configure the cell...
+    if (cell == nil) {
+        cell = [[SongTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:self.cellIdentifier];
+    }
+    
+    SongData *data = (SongData *)[self.tuneSearchdata.songList objectAtIndex:indexPath.row];
+    cell.songTitle.text = data.songTitle;
+    cell.albumTitle.text = data.albumTitle;
+    cell.artist.text = data.artist;
+    
+    if (data.albumImage == nil)
+        data.albumImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:data.albumImageURL]]];
+    
+    [cell.albumImage setImage:data.albumImage];
     
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return self.rowHeight;
 }
 
 /*
@@ -90,5 +126,24 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - Delegates
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    
+    [self.searchBar resignFirstResponder]; // Dimiss the keyboard
+
+    if (searchBar.text == nil)
+        return;
+    
+    [self.tuneSearchdata getSongsUsingSearchTerms:searchBar.text];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = true;
+}
+
+- (void)dataLoaded {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = false;
+    [self.tableView reloadData];
+}
+
 
 @end

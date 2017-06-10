@@ -10,10 +10,11 @@
 
 @interface SongData : NSObject
 
-@property (strong, nonatomic) NSString *trackTitle;
+@property (strong, nonatomic) NSString *songTitle;
 @property (strong, nonatomic) NSString *albumTitle;
 @property (strong, nonatomic) NSString *artist;
 @property (strong, nonatomic) NSString *albumImageURL;
 @property (strong, nonatomic) UIImage  *albumImage;
+@property (strong, nonatomic) NSString *songLyrics;
 
 @end
