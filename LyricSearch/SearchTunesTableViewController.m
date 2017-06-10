@@ -10,6 +10,7 @@
 #import "SongTableViewCell.h"
 #import "SongData.h"
 #import "TuneSearchData.h"
+#import "LyricsViewController.h"
 
 @interface SearchTunesTableViewController () <UISearchBarDelegate, TuneSearchDelegate>
 
@@ -57,7 +58,6 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //static NSString *cellIdentifier = @"ResultsCell";
 
     SongTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.cellIdentifier];
     
@@ -74,7 +74,7 @@
         data.albumImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:data.albumImageURL]]];
     
     [cell.albumImage setImage:data.albumImage];
-    
+    cell.index = indexPath.row;
     return cell;
 }
 
@@ -117,15 +117,14 @@
 }
 */
 
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    SongTableViewCell *cell = sender;
+    LyricsViewController *vc = [segue destinationViewController];
+    vc.songData = (SongData *)[self.tuneSearchdata.songList objectAtIndex:cell.index];
 }
-*/
 
 #pragma mark - Delegates
 

@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *songTitle;
 @property (weak, nonatomic) IBOutlet UILabel *albumTitle;
 @property (weak, nonatomic) IBOutlet UILabel *artist;
+@property (assign, nonatomic) NSInteger index;
 
 @end

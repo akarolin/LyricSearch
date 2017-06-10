@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B0C20E51EEC5BEA005A5308 /* LyricsData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B0C20E41EEC5BEA005A5308 /* LyricsData.m */; };
+		0B0C20E81EEC658F005A5308 /* LyricsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B0C20E71EEC658F005A5308 /* LyricsViewController.m */; };
 		0B436CE21EE9928B0097971D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B436CE11EE9928B0097971D /* main.m */; };
 		0B436CE51EE9928C0097971D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B436CE41EE9928C0097971D /* AppDelegate.m */; };
 		0B436CEB1EE9928C0097971D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B436CE91EE9928C0097971D /* Main.storyboard */; };
@@ -42,6 +44,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0B0C20E31EEC5BEA005A5308 /* LyricsData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LyricsData.h; sourceTree = "<group>"; };
+		0B0C20E41EEC5BEA005A5308 /* LyricsData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LyricsData.m; sourceTree = "<group>"; };
+		0B0C20E61EEC658F005A5308 /* LyricsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LyricsViewController.h; sourceTree = "<group>"; };
+		0B0C20E71EEC658F005A5308 /* LyricsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LyricsViewController.m; sourceTree = "<group>"; };
 		0B436CDD1EE9928B0097971D /* LyricSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LyricSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B436CE11EE9928B0097971D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0B436CE31EE9928C0097971D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -125,6 +131,8 @@
 				0B436D141EE995B00097971D /* SearchTunesTableViewController.m */,
 				0B63729B1EEB64A000B256CF /* SongTableViewCell.h */,
 				0B63729C1EEB64A000B256CF /* SongTableViewCell.m */,
+				0B0C20E61EEC658F005A5308 /* LyricsViewController.h */,
+				0B0C20E71EEC658F005A5308 /* LyricsViewController.m */,
 				0B436CE91EE9928C0097971D /* Main.storyboard */,
 				0B436D161EE9A8B90097971D /* WebService.h */,
 				0B436D171EE9A8B90097971D /* WebService.m */,
@@ -132,6 +140,8 @@
 				0B806BFB1EEB2F130060792A /* SongData.m */,
 				0B436D1B1EEB1F290097971D /* TuneSearchData.h */,
 				0B436D1C1EEB1F290097971D /* TuneSearchData.m */,
+				0B0C20E31EEC5BEA005A5308 /* LyricsData.h */,
+				0B0C20E41EEC5BEA005A5308 /* LyricsData.m */,
 				0B436CE01EE9928B0097971D /* Supporting Files */,
 			);
 			path = LyricSearch;
@@ -310,8 +320,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B6372991EEB5A2400B256CF /* StringConstants.m in Sources */,
+				0B0C20E51EEC5BEA005A5308 /* LyricsData.m in Sources */,
 				0B806BFC1EEB2F130060792A /* SongData.m in Sources */,
 				0B436D1D1EEB1F290097971D /* TuneSearchData.m in Sources */,
+				0B0C20E81EEC658F005A5308 /* LyricsViewController.m in Sources */,
 				0B806BF31EEB27AA0060792A /* NSString+CondenseSpaces.m in Sources */,
 				0B436CE51EE9928C0097971D /* AppDelegate.m in Sources */,
 				0B436D151EE995B00097971D /* SearchTunesTableViewController.m in Sources */,
