@@ -10,10 +10,9 @@
 #import "WebService.h"
 #import "NSString+CondenseSpaces.h"
 #import "SongData.h"
-#import "StringConstants.h"
 
 
-@interface TuneSearchData() <WebServiceDelegate>
+@interface TuneSearchData()
 
 @property (nonatomic, strong) NSString *urlStub;
 @property (nonatomic, strong) WebService *webService;
@@ -27,53 +26,38 @@
     if (self = [super init]) {
         _urlStub = @"https://itunes.apple.com/search?entity=song&term="; //tom+waits
         _webService = [[WebService alloc] init];
-        _webService.delegate = self;
     }
     return self;
 }
 
-- (void)getSongsUsingSearchTerms:(NSString *)searchTerms{
+- (void)getSongsUsingSearchTerms:(NSString *)searchTerms updatedSongList:(void (^)(NSArray *songList))updateSongList {
     NSString *searchString = [searchTerms condenseSpaces];
     searchString = [searchString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     NSString *url =[NSString stringWithFormat:@"%@%@", self.urlStub, searchString];
     
-    [self.webService getWebDataByURL:url];
-}
+    [self.webService getWebDataByURL:url completionHandler:^(NSDictionary *dataObject, NSString *errorMessage) {
 
-// webservice delegate
-- (void)webServiceResponse:(NSDictionary *)dataObject withError:(NSString *)errorMessage {
- 
-    NSMutableArray *songList = [[NSMutableArray alloc] initWithCapacity:[dataObject count]];
-    _testExpectation = nil;
-    
-    if (dataObject == nil) {
-        _testExpectation = NoDataFound;
-
-    } else {
-
-        for(NSDictionary *item in dataObject[@"results"]) {
-            
-            SongData *songData = [[SongData alloc] init];
-            songData.artist = [item objectForKey:@"artistName"];
-            songData.songTitle = [item objectForKey:@"trackName"];
-            songData.albumTitle = [item objectForKey:@"collectionName"];
-            songData.albumImageURL = [item objectForKey:@"artworkUrl60"];
-            [songList addObject:songData];
-        }
+        NSMutableArray *songList = nil;
         
-        _testExpectation = [songList count] == 0 ? NoDataFound : DataFound;
-    }
-    
-    self.songList = songList;
-    [self dataLoaded];
+        if (dataObject == nil) {
+            
+        } else {
+            songList = [[NSMutableArray alloc] initWithCapacity:[dataObject count]];
+            
+            for(NSDictionary *item in dataObject[@"results"]) {
+                
+                SongData *songData = [[SongData alloc] init];
+                songData.artist = [item objectForKey:@"artistName"];
+                songData.songTitle = [item objectForKey:@"trackName"];
+                songData.albumTitle = [item objectForKey:@"collectionName"];
+                songData.albumImageURL = [item objectForKey:@"artworkUrl60"];
+                [songList addObject:songData];
+            }
+            
+        }
+       updateSongList(songList);
+    }];
 }
 
-- (void)dataLoaded {
-    if ([self.delegate respondsToSelector:@selector(dataLoaded)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            [self.delegate dataLoaded];
-        });
-    }
-}
 
 @end

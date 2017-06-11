@@ -10,11 +10,8 @@
 #import "WebService.h"
 #import "StringConstants.h"
 
-@interface WebServiceTests : XCTestCase<WebServiceDelegate>
+@interface WebServiceTests : XCTestCase
 @property (nonatomic, strong) WebService *webService;
-@property (nonatomic, strong) XCTestExpectation *serverRespondExpectation;
-@property (nonatomic, strong) NSDictionary *objectFromWebServiceDelegate;
-@property (nonatomic, strong) NSString *errorMessageFromWebServiceDelegate;
 
 @end
 
@@ -23,18 +20,11 @@
 - (void)setUp {
     [super setUp];
     self.webService = [[WebService alloc] init];
-    self.webService.delegate = self;
 }
 
 - (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
-}
-
-- (void)webServiceResponse:(NSDictionary *)dataObject withError:(NSString *)errorMessage {
-    self.objectFromWebServiceDelegate = dataObject;
-    self.errorMessageFromWebServiceDelegate = errorMessage;
-    [self.serverRespondExpectation fulfill];
 }
 
 - (void)testCreateURL {
@@ -88,60 +78,50 @@
 }
 
 - (void)testSuccessfulJSONCall {
-    [self.webService getWebDataByURL:@"https://itunes.apple.com/search?term=tom+waits"];
     
-    self.serverRespondExpectation = [self expectationWithDescription:@"server responded"];
-    [self waitForExpectationsWithTimeout:2 handler:^(NSError *error) {
-        XCTAssertNil(error,@"Server Timeout Error: %@", error.localizedDescription);
-        XCTAssertNotNil(self.objectFromWebServiceDelegate, @"Data object expected");
-        XCTAssertNil(self.errorMessageFromWebServiceDelegate, @"No error expected: %@", self.errorMessageFromWebServiceDelegate);
-    }];
-    
+    [self successfulCallExpected:@"https://itunes.apple.com/search?term=tom+waits"];
 }
 
 - (void)testSuccessfulJSObjectCall {
     
-    // this returns a javascript ojbect
-    [self.webService getWebDataByURL:@"http://lyrics.wikia.com/api.php?func=getSong&artist=Tom+Waits&song=new+coat+of+paint&fmt=json"];
-    
-    self.serverRespondExpectation = [self expectationWithDescription:@"server responded"];
-    [self waitForExpectationsWithTimeout:2 handler:^(NSError *error) {
-        XCTAssertNil(error,@"Server Timeout Error: %@", error.localizedDescription);
-        XCTAssertNotNil(self.objectFromWebServiceDelegate,@"Data object expected");
-        XCTAssertNil(self.errorMessageFromWebServiceDelegate, @"No error expected: %@", self.errorMessageFromWebServiceDelegate);
-    }];
-    
+    [self successfulCallExpected:@"http://lyrics.wikia.com/api.php?func=getSong&artist=Tom+Waits&song=new+coat+of+paint&fmt=json"];
 }
 
-- (void)testFailedJSON {
-    [self.webService getWebDataByURL:@"https://www.google.com"];
-    
-    self.serverRespondExpectation = [self expectationWithDescription:@"server responded"];
-    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
-        XCTAssertNil(error,@"Server Timeout Error: %@", error.localizedDescription);
-        XCTAssertNil(self.objectFromWebServiceDelegate,@"Data object expected");
-        XCTAssertTrue([self.errorMessageFromWebServiceDelegate hasPrefix:JSONError]);
+- (void)successfulCallExpected:(NSString *)url {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"server responded"];
+
+    [self.webService getWebDataByURL:url completionHandler:^(NSDictionary *object, NSString *errorMessage){
+        [expectation fulfill];
+        XCTAssertNotNil(object, @"Data object expected");
+        XCTAssertNil(errorMessage, @"No error expected: %@", errorMessage);
     }];
+    
+    [self waitForExpectationsWithTimeout:2 handler:nil];
+}
+
+
+- (void)testFailedJSONCall {
+    
+    [self failedCallExpected:@"https://www.google.com" expectingPrefix:JSONError ];
 }
 
 - (void)testBadURL {
-    [self.webService getWebDataByURL:@"https://itunes.apple.com/search?term=tom+waits&entity=xyz"];
     
-    self.serverRespondExpectation = [self expectationWithDescription:@"server responded"];
-    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
-        XCTAssertNil(error,@"Server Timeout Error: %@", error.localizedDescription);
-        XCTAssertNil(self.objectFromWebServiceDelegate,@"Data object expected");
-        XCTAssertTrue([self.errorMessageFromWebServiceDelegate hasPrefix:HTTPError]);
-    }];
-    
+    [self failedCallExpected:@"https://itunes.apple.com/search?term=tom+waits&entity=xyz" expectingPrefix:HTTPError];
 }
 
-//10.0.0.0
-//- (void)testPerformanceExample {
-//    // This is an example of a performance test case.
-//    [self measureBlock:^{
-//        // Put the code you want to measure the time of here.
-//    }];
-//}
+- (void)failedCallExpected:(NSString *)url  expectingPrefix:(NSString *)testPrefix {
+    
+    XCTestExpectation *expectation = [self expectationWithDescription:@"server responded"];
+
+    [self.webService getWebDataByURL:url completionHandler:^(NSDictionary *object, NSString *errorMessage) {
+        [expectation fulfill];
+        XCTAssertNil(object ,@"No data object expected");
+        XCTAssertTrue([errorMessage hasPrefix:testPrefix]);
+    }];
+
+    [self waitForExpectationsWithTimeout:5 handler:nil];
+}
+
 
 @end

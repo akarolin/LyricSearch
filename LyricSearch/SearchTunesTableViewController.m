@@ -12,12 +12,13 @@
 #import "TuneSearchData.h"
 #import "LyricsViewController.h"
 
-@interface SearchTunesTableViewController () <UISearchBarDelegate, TuneSearchDelegate>
+@interface SearchTunesTableViewController () <UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, strong) TuneSearchData *tuneSearchdata;
 @property (nonatomic, strong) NSString *cellIdentifier;
 @property (nonatomic, assign) NSInteger rowHeight;
+@property (nonatomic, strong) NSArray *songList;
 
 @end
 
@@ -28,18 +29,10 @@
     
     self.tuneSearchdata = [[TuneSearchData alloc] init];
     self.searchBar.delegate = self;
-    self.tuneSearchdata.delegate = self;
     self.cellIdentifier = @"ResultsCell";
     
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:self.cellIdentifier];
     self.rowHeight = cell.bounds.size.height;
-
-   
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -54,7 +47,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.tuneSearchdata.songList count];
+    return [self.songList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -65,7 +58,7 @@
         cell = [[SongTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:self.cellIdentifier];
     }
     
-    SongData *data = (SongData *)[self.tuneSearchdata.songList objectAtIndex:indexPath.row];
+    SongData *data = (SongData *)[self.songList objectAtIndex:indexPath.row];
     cell.songTitle.text = data.songTitle;
     cell.albumTitle.text = data.albumTitle;
     cell.artist.text = data.artist;
@@ -83,66 +76,32 @@
     return self.rowHeight;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     SongTableViewCell *cell = sender;
     LyricsViewController *vc = [segue destinationViewController];
-    vc.songData = (SongData *)[self.tuneSearchdata.songList objectAtIndex:cell.index];
+    vc.songData = (SongData *)[self.songList objectAtIndex:cell.index];
 }
 
 #pragma mark - Delegates
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     
-    [self.searchBar resignFirstResponder]; // Dimiss the keyboard
+    [self.searchBar resignFirstResponder]; // Dismiss the keyboard
 
     if (searchBar.text == nil)
         return;
     
-    [self.tuneSearchdata getSongsUsingSearchTerms:searchBar.text];
+    [self.tuneSearchdata getSongsUsingSearchTerms:searchBar.text updatedSongList:^(NSArray *songList) {
+        self.songList = songList;
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = false;
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            [self.tableView reloadData];
+        });
+
+    }];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = true;
 }
-
-- (void)dataLoaded {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = false;
-    [self.tableView reloadData];
-}
-
 
 @end

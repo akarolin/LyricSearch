@@ -28,47 +28,59 @@
 }
 
 - (void)testCondenseSpaces {
-    NSString *testString = @"   This     is      a        test    ";
+    // test all cases
+    NSString *testString1 = @"   This     is      a        test    ";
+    NSString *testString2 = @"This     is      a        test    ";
+    NSString *testString3 = @"   This     is      a        test";
+    NSString *testString4 = @"This     is      a        test";
+    NSString *testString5 = @"This is a test";
     NSString *finalString = @"This is a test";
     
-    NSString *newString = [testString condenseSpaces];
+    NSString *newString = [testString1 condenseSpaces];
+    XCTAssertTrue([newString isEqualToString:finalString]);
+
+    newString = [testString2 condenseSpaces];
+    XCTAssertTrue([newString isEqualToString:finalString]);
+    
+    newString = [testString3 condenseSpaces];
+    XCTAssertTrue([newString isEqualToString:finalString]);
+    
+    newString = [testString4 condenseSpaces];
+    XCTAssertTrue([newString isEqualToString:finalString]);
+    
+    newString = [testString5 condenseSpaces];
     XCTAssertTrue([newString isEqualToString:finalString]);
     
 }
 
 - (void)testSuccessfulTuneSearch {
 
+    XCTestExpectation *expectation = [self expectationWithDescription:@"server responded"];
+
     TuneSearchData *tuneSearchData = [[TuneSearchData alloc] init];
-    [tuneSearchData getSongsUsingSearchTerms:@"tom waits"];
-    
-    NSPredicate *exists = [NSPredicate predicateWithFormat:@"testExpectation != nil"];
-    [self expectationForPredicate:exists evaluatedWithObject:tuneSearchData handler:nil];
-    [self waitForExpectationsWithTimeout:2 handler:^(NSError *error) {
-        XCTAssertNil(error,@"Server Timeout Error: %@", error.localizedDescription);
-        XCTAssertTrue([tuneSearchData.testExpectation isEqualToString:DataFound]);
+    [tuneSearchData getSongsUsingSearchTerms:@"tom waits" updatedSongList:^(NSArray *songList) {
+        [expectation fulfill];
+        XCTAssertNotNil(songList, @"Expected object");
+        XCTAssertTrue([songList count] > 0);
     }];
-    
+
+    [self waitForExpectationsWithTimeout:2 handler:nil];
 }
 
 - (void)testUnsuccessfulTuneSearch {
     
+    XCTestExpectation *expectation = [self expectationWithDescription:@"server responded"];
+    
     TuneSearchData *tuneSearchData = [[TuneSearchData alloc] init];
-    [tuneSearchData getSongsUsingSearchTerms:@"sgyhrk"];
-    
-    NSPredicate *exists = [NSPredicate predicateWithFormat:@"testExpectation != nil"];
-    [self expectationForPredicate:exists evaluatedWithObject:tuneSearchData handler:nil];
-    [self waitForExpectationsWithTimeout:2 handler:^(NSError *error) {
-        XCTAssertNil(error,@"Server Timeout Error: %@", error.localizedDescription);
-        XCTAssertTrue([tuneSearchData.testExpectation isEqualToString:NoDataFound]);
+    [tuneSearchData getSongsUsingSearchTerms:@"sgyhrk"  updatedSongList:^(NSArray *songList){
+        [expectation fulfill];
+        XCTAssertNotNil(songList, @"Expected object");
+        XCTAssertTrue([songList count] == 0);
+        
     }];
-    
-}
 
-//- (void)testPerformanceExample {
-//    // This is an example of a performance test case.
-//    [self measureBlock:^{
-//        // Put the code you want to measure the time of here.
-//    }];
-//}
+    [self waitForExpectationsWithTimeout:2 handler:nil];
+
+}
 
 @end

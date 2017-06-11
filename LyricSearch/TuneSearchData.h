@@ -7,16 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-@protocol TuneSearchDelegate <NSObject>
-- (void)dataLoaded;
-@end
 
 @interface TuneSearchData : NSObject
 
-@property (nonatomic, strong) NSArray *songList;
-@property (nonatomic, strong) NSString *testExpectation;
-@property (nonatomic, strong) id<TuneSearchDelegate> delegate;
-
-- (void)getSongsUsingSearchTerms:(NSString *)searchTerms;
+- (void)getSongsUsingSearchTerms:(NSString *)searchTerms updatedSongList:(void (^)(NSArray *songList))updateSongList;
 
 @end

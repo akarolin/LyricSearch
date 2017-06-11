@@ -11,7 +11,6 @@
 NSString * const ResponseError = @"Error";
 NSString * const HTTPError = @"HTTP Error";
 NSString * const JSONError = @"JSON Error";
-NSString * const DataError = @"DATA Error";
 
 NSString * const NoDataFound = @"No data found";
 NSString * const DataFound   = @"Data found";

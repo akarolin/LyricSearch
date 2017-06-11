@@ -11,7 +11,6 @@
 extern NSString * const ResponseError;
 extern NSString * const HTTPError;
 extern NSString * const JSONError;
-extern NSString * const DataError;
 
 extern NSString * const NoDataFound;
 extern NSString * const DataFound;

@@ -32,43 +32,43 @@
     return newURL;
 }
 
-- (void) getWebDataByURL:(NSString *)urlString {
+- (void) getWebDataByURL:(NSString *)urlString {} // fix temp compile time errors
+
+- (void) getWebDataByURL:(NSString *)urlString completionHandler:(void (^)(NSDictionary *dataObject, NSString *errorMessage))responseValues {
 
     NSURLSession *session = [NSURLSession sharedSession];
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        NSMutableString *errorMessage = nil;
+        NSDictionary *dataObject = nil;
         
         if (error != nil) { // general error
             NSMutableString *errorMessage = [[NSMutableString alloc] initWithFormat:@"%@: ",ResponseError];
             [errorMessage appendString:error.localizedDescription];
             if (error.localizedFailureReason != nil && error.localizedFailureReason.length > 0)
                 [errorMessage appendFormat:@"\n%@",error.localizedFailureReason ];
-            [self webServiceResponse:nil withError:errorMessage];
-            
         } else {
             
             // test for valid HTTP response
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
             if (httpResponse.statusCode != 200) {
-                NSString *errorMessage = [NSString stringWithFormat:@"%@: %ld: %@", HTTPError, httpResponse.statusCode,
+                errorMessage = [NSMutableString stringWithFormat:@"%@: %ld: %@", HTTPError, httpResponse.statusCode,
                                                                 [NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode]];
-                [self webServiceResponse:nil withError:errorMessage];
             } else { // Valid reponse attempt to get object
                 
                 NSError *jsonError = nil;
-                NSDictionary *dataObject = [self getResponseObjectFromData:data withError:&jsonError];
+                dataObject = [self getResponseObjectFromData:data withError:&jsonError];
                 if (dataObject == nil) {
-                    NSMutableString *errorMessage = [[NSMutableString alloc] initWithFormat:@"%@: ",JSONError];
+                    errorMessage = [[NSMutableString alloc] initWithFormat:@"%@: ",JSONError];
                     [errorMessage appendString:jsonError.localizedDescription];
                     if (error.localizedFailureReason != nil && jsonError.localizedFailureReason.length > 0)
                         [errorMessage appendFormat:@"\n%@",jsonError.localizedFailureReason ];
-                    [self webServiceResponse:nil withError:errorMessage];
-                } else {
-                    [self webServiceResponse:dataObject withError:nil];
-                    
                 }
             }
         }
+        responseValues(dataObject,errorMessage);
+
     }];
     
     [dataTask resume];
