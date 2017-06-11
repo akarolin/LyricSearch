@@ -72,6 +72,7 @@
     
     [cell tap];
     
+    // I do not know it this will always be true
     NSString *testLyrics = @"Well, I hope that I don't fall in love with you 'Cause falling in love just makes me blue Well, the music plays and you display your heart for me to see I had a beer and now I hear you ca[...]";
     
     test = app.staticTexts[testLyrics];
