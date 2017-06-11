@@ -8,15 +8,9 @@
 #import <Foundation/Foundation.h>
 #import "SongData.h"
 
-@protocol LyricsDataDelegate <NSObject>
-- (void)dataLoaded;
-@end
-
 @interface LyricsData : NSObject
 
-@property (nonatomic, strong) NSString *lyrics;
-@property (nonatomic, strong) id<LyricsDataDelegate> delegate;
-
 - (void)getLyrics:(NSString *)artist andSongTitle:(NSString *)songTitle;
+- (void)getLyrics:(NSString *)artist andSongTitle:(NSString *)songTitle getLyrics:(void (^)(NSString *lyrics))returnLyrics;
 
 @end

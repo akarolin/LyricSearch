@@ -13,7 +13,7 @@
 #import "StringConstants.h"
 
 
-@interface LyricsData() <WebServiceDelegate>
+@interface LyricsData()
 
 @property (nonatomic, strong) WebService *webService;
 
@@ -23,14 +23,13 @@
 
 - (id)init {
     if (self = [super init]) {
-
         _webService = [[WebService alloc] init];
-        _webService.delegate = self;
     }
     return self;
 }
 
-- (void)getLyrics:(NSString *)artist andSongTitle:(NSString *)songTitle {
+- (void)getLyrics:(NSString *)artist andSongTitle:(NSString *)songTitle {} // temporary
+- (void)getLyrics:(NSString *)artist andSongTitle:(NSString *)songTitle getLyrics:(void (^)(NSString *lyrics))returnLyrics {
 
     // http://lyrics.wikia.com/api.php?func=getSong&artist=Tom+Waits&song=new+coat+of+paint&fmt=json
     
@@ -42,27 +41,15 @@
     
     NSString *url = [self.webService createCompleteURLString:@"lyrics.wikia.com/api.php" withParameters:parameters andHTTPS:NO];
     
-    [self.webService getWebDataByURL:url];
-}
+    [self.webService getWebDataByURL:url completionHandler:^(NSDictionary *dataObject, NSString *errorMessage) {
+        NSString *lyrics = @"";
 
-// webservice delegate
-- (void)webServiceResponse:(NSDictionary *)dataObject withError:(NSString *)errorMessage {
- 
-    self.lyrics = @"";
-
-    if (dataObject != nil) {
-        self.lyrics = [dataObject objectForKey:@"lyrics"];
-    }
+        if (dataObject != nil) {
+            lyrics = [dataObject objectForKey:@"lyrics"];
+        }
     
-    [self dataLoaded];
-}
-
-- (void)dataLoaded {
-    if ([self.delegate respondsToSelector:@selector(dataLoaded)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            [self.delegate dataLoaded];
-        });
-    }
+        returnLyrics(lyrics);
+    }];
 }
 
 @end

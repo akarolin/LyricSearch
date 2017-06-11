@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "NSString+CondenseSpaces.h"
 #import "TuneSearchData.h"
+#import "LyricsData.h"
 #import "StringConstants.h"
 
 @interface LyricSearchTests : XCTestCase
@@ -82,5 +83,32 @@
     [self waitForExpectationsWithTimeout:2 handler:nil];
 
 }
+
+- (void)testSuccessfulLyricsGet {
+    
+    XCTestExpectation *expectation = [self expectationWithDescription:@"server responded"];
+    
+    LyricsData *lyricsData = [[LyricsData alloc] init];
+    [lyricsData getLyrics:@"Tom Waits" andSongTitle:@"new coat of paint" getLyrics:^(NSString *lyrics) {
+        [expectation fulfill];
+        XCTAssertFalse([lyrics isEqualToString:@"Not found"]);
+    }];
+    
+    [self waitForExpectationsWithTimeout:2 handler:nil];
+}
+
+- (void)testUnsuccessfulLyricsGet {
+    
+    XCTestExpectation *expectation = [self expectationWithDescription:@"server responded"];
+    
+    LyricsData *lyricsData = [[LyricsData alloc] init];
+    [lyricsData getLyrics:@"Tom Waits" andSongTitle:@"nshjhohog" getLyrics:^(NSString *lyrics) {
+        [expectation fulfill];
+        XCTAssertTrue([lyrics isEqualToString:@"Not found"]);
+    }];
+    
+    [self waitForExpectationsWithTimeout:2 handler:nil];
+}
+
 
 @end

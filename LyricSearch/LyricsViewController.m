@@ -9,7 +9,7 @@
 #import "LyricsViewController.h"
 #import "LyricsData.h"
 
-@interface LyricsViewController () <LyricsDataDelegate>
+@interface LyricsViewController () 
 
 @property (weak, nonatomic) IBOutlet UILabel *songTitle;
 @property (weak, nonatomic) IBOutlet UILabel *albumTitle;
@@ -38,12 +38,20 @@
         // check to se that we have artist and song info
          if ((self.songData.artist != nil && self.songData.artist.length > 0) &&
              (self.songData.songTitle != nil && self.songData.songTitle.length > 0)) {
+             
+             [UIApplication sharedApplication].networkActivityIndicatorVisible = true;
 
              self.lyricsData = [[LyricsData alloc] init];
-             self.lyricsData.delegate = self;
-             [self.lyricsData getLyrics:self.songData.artist andSongTitle:self.songData.songTitle];
+             
+             [self.lyricsData getLyrics:self.songData.artist andSongTitle:self.songData.songTitle getLyrics:^(NSString *lyrics) {
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = false;
+                self.songData.songLyrics = lyrics;
+                 dispatch_async(dispatch_get_main_queue(), ^(void){
+                     self.lyrics.text = lyrics;
+                 });
+             }];
          } else {
-             self.songData.songLyrics = @"";
+             self.lyrics.text = @"Artist and/or song tile is missing";
          }
     }
 }
@@ -55,12 +63,6 @@
 
 - (void)viewDidLayoutSubviews {
     [self.lyrics sizeToFit];
-}
-
-- (void)dataLoaded {
-    self.songData.songLyrics = self.lyricsData.lyrics;
-    self.lyrics.text = self.lyricsData.lyrics;
-    [self.view setNeedsDisplay];
 }
 
 @end

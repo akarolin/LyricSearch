@@ -88,11 +88,4 @@
     return dataObject;
 }
 
-
--(void)webServiceResponse:(NSDictionary *)dataObject withError:(NSString *)errorMessage {
-    if ([self.delegate respondsToSelector:@selector(webServiceResponse: withError:)]) {
-        [self.delegate webServiceResponse:dataObject withError:errorMessage];
-    }
-}
-
 @end
